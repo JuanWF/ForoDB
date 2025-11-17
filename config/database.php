@@ -113,6 +113,26 @@ return [
             // 'trust_server_certificate' => env('DB_TRUST_SERVER_CERTIFICATE', 'false'),
         ],
 
+        // 'mongodb' => [
+        //     'driver' => 'mongodb',
+        //     'dsn' => env('MONGODB_DSN'),
+        //     'host' => env('MONGODB_HOST', '127.0.0.1'),
+        //     'port' => env('MONGODB_PORT', 27017),
+        //     'database' => env('MONGODB_DATABASE', 'forum'),
+        //     'username' => env('MONGODB_USERNAME'),
+        //     'password' => env('MONGODB_PASSWORD'),
+        //     'options' => [
+        //         'database' => env('MONGODB_AUTH_DATABASE', 'admin'),
+        //         'retryWrites' => true,
+        //         'w' => 'majority',
+        //     ],
+        // ],
+        'mongodb' => [
+            'driver' => 'mongodb',
+            'dsn' => env('MONGODB_URI', 'mongodb://localhost:27017'),
+            'database' => env('MONGODB_DATABASE', 'laravel_app'),
+        ],
+
     ],
 
     /*

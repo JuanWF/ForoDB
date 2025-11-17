@@ -4,6 +4,7 @@ namespace App\Actions\Fortify;
 
 use App\Models\User;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\ValidationException;
 use Illuminate\Validation\Rule;
 use Laravel\Fortify\Contracts\CreatesNewUsers;
 
@@ -20,19 +21,20 @@ class CreateNewUser implements CreatesNewUsers
     {
         Validator::make($input, [
             'name' => ['required', 'string', 'max:255'],
-            'email' => [
-                'required',
-                'string',
-                'email',
-                'max:255',
-                Rule::unique(User::class),
-            ],
+            'email' => ['required', 'string', 'email', 'max:255'],
             'password' => $this->passwordRules(),
         ])->validate();
 
+        $email = strtolower($input['email']);
+        if (User::query()->where('email', $email)->exists()) {
+            throw ValidationException::withMessages([
+                'email' => __('The email has already been taken.'),
+            ]);
+        }
+
         return User::create([
             'name' => $input['name'],
-            'email' => $input['email'],
+            'email' => $email,
             'password' => $input['password'],
         ]);
     }
