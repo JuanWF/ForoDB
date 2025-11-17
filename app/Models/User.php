@@ -71,6 +71,14 @@ class User extends Authenticatable
     }
 
     /**
+     * Get the username (parte antes del @)
+     */
+    public function getUsernameAttribute(): string
+    {
+        return Str::before($this->email, '@');
+    }
+
+    /**
      * Normalize email to lowercase when setting.
      */
     public function setEmailAttribute($value): void
@@ -78,5 +86,13 @@ class User extends Authenticatable
         $this->attributes['email'] = is_string($value)
             ? strtolower(trim($value))
             : $value;
+    }
+
+    /**
+     * Relación con posts
+     */
+    public function posts()
+    {
+        return $this->hasMany(Post::class, 'author._id', '_id');
     }
 }
