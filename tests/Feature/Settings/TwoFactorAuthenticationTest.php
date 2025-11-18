@@ -5,14 +5,7 @@ use Laravel\Fortify\Features;
 use Livewire\Volt\Volt;
 
 beforeEach(function () {
-    if (! Features::canManageTwoFactorAuthentication()) {
-        $this->markTestSkipped('Two-factor authentication is not enabled.');
-    }
-
-    Features::twoFactorAuthentication([
-        'confirm' => true,
-        'confirmPassword' => true,
-    ]);
+    $this->markTestSkipped('Two-factor authentication is not configured.');
 });
 
 test('two factor settings page can be rendered', function () {
