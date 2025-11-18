@@ -30,11 +30,14 @@ class ForumDemoSeeder extends Seeder
 
         $now = Carbon::now();
 
-        // Posts con estructura MongoDB (documentos embebidos)
+        // Posts con estructura MongoDB (documentos embebidos + referencias)
+        // Los posts ahora tienen user_id (referencia) además de author (embebido)
+        // Esto permite hacer búsquedas por referencia entre colecciones
         $postsData = [
             [
                 'title' => 'Problemas al usar $lookup en MongoDB?',
                 'body' => 'Hola a todos, estoy teniendo problemas al usar el operador $lookup en MongoDB para unir colecciones. Me gustaría saber si alguien ha tenido experiencias similares y qué soluciones han encontrado. Específicamente, estoy notando lentitud cuando trabajo con colecciones grandes.',
+                'user_id' => (string) $juan->_id, // Referencia a la colección users
                 'author' => [
                     '_id' => (string) $juan->_id,
                     'name' => $juan->name,
@@ -78,6 +81,7 @@ class ForumDemoSeeder extends Seeder
             [
                 'title' => '¿Cómo optimizar consultas en MongoDB?',
                 'body' => 'Estoy trabajando en un proyecto con MongoDB y he notado que algunas consultas son muy lentas. ¿Alguien puede compartir consejos sobre cómo optimizar consultas? He oído hablar de índices, pero no estoy seguro de cómo implementarlos correctamente.',
+                'user_id' => (string) $admin->_id, // Referencia a la colección users
                 'author' => [
                     '_id' => (string) $admin->_id,
                     'name' => $admin->name,
@@ -123,6 +127,7 @@ class ForumDemoSeeder extends Seeder
             [
                 'title' => 'Comparación: SQL vs NoSQL',
                 'body' => 'He trabajado principalmente con bases de datos SQL como MySQL y PostgreSQL. Recientemente empecé a explorar MongoDB y otras bases NoSQL. ¿Alguien puede compartir sus experiencias sobre cuándo usar una u otra?',
+                'user_id' => (string) $juan->_id, // Referencia a la colección users
                 'author' => [
                     '_id' => (string) $juan->_id,
                     'name' => $juan->name,
@@ -144,6 +149,7 @@ class ForumDemoSeeder extends Seeder
             [
                 'title' => 'Mejores prácticas para modelado de datos en MongoDB',
                 'body' => 'Vengo del mundo relacional y estoy adaptándome al modelado de datos en MongoDB. ¿Cuáles son las mejores prácticas para diseñar esquemas? ¿Cuándo embebed vs referencias?',
+                'user_id' => (string) $admin->_id, // Referencia a la colección users
                 'author' => [
                     '_id' => (string) $admin->_id,
                     'name' => $admin->name,

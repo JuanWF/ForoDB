@@ -100,11 +100,15 @@ class Show extends Component
     {
         $post = $this->post;
         
+        // Búsqueda por referencia: obtener datos del autor desde la colección users
+        $authorFromReference = $post->getAuthorFromReference();
+        
         $trending = collect($post->tags ?? [])
             ->mapWithKeys(fn($tag) => [$tag => 1]);
 
         return view('livewire.posts.show', [
             'post' => $post,
+            'authorFromReference' => $authorFromReference,
             'trending' => $trending,
         ]);
     }

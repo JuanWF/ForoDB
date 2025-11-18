@@ -17,6 +17,7 @@ class Post extends Model
         'title',
         'body',
         'author',
+        'user_id',
         'tags',
         'comments',
         'reactions',
@@ -64,6 +65,31 @@ class Post extends Model
         }
         
         return $score;
+    }
+
+    /**
+     * Obtener el autor del post mediante búsqueda por referencia
+     * Este método realiza una búsqueda en la colección 'users' usando el user_id
+     * Esto demuestra una búsqueda por referencia entre colecciones
+     */
+    public function getAuthorFromReference()
+    {
+        if (!isset($this->user_id)) {
+            return $this->author; // Fallback a datos embebidos
+        }
+        
+        // Búsqueda por referencia: buscar en la colección users
+        $user = User::where('_id', $this->user_id)->first();
+        
+        if ($user) {
+            return [
+                '_id' => (string) $user->_id,
+                'name' => $user->name,
+                'email' => $user->email,
+            ];
+        }
+        
+        return $this->author; // Fallback
     }
 
     /**

@@ -79,8 +79,9 @@
                         <!-- Author info -->
                         <div class="flex items-center gap-3 mb-6 pb-4 border-b border-zinc-100">
                             @php
-                                $authorName = is_array($post->author) ? ($post->author['name'] ?? 'Usuario') : 'Usuario';
-                                $authorEmail = is_array($post->author) ? ($post->author['email'] ?? 'usuario@example.com') : 'usuario@example.com';
+                                // Datos obtenidos por búsqueda por referencia (ver Post::getAuthorFromReference())
+                                $authorName = $authorFromReference['name'] ?? 'Usuario';
+                                $authorEmail = $authorFromReference['email'] ?? 'usuario@example.com';
                                 $authorInitial = substr($authorName, 0, 1);
                                 $username = explode('@', $authorEmail)[0];
                             @endphp

@@ -43,6 +43,7 @@ class Create extends Component
         $post = new Post();
         $post->title = trim($this->title);
         $post->body = trim($this->body);
+        $post->user_id = (string) $user->_id; // Referencia a la colección users
         $post->author = [
             '_id' => (string) $user->_id,
             'name' => $user->name,
