@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 use Laravel\Fortify\Features;
 use Livewire\Volt\Volt;
 use App\Livewire\Posts\Index as PostsIndex;
@@ -8,6 +9,9 @@ use App\Livewire\Posts\Show as PostsShow;
 use App\Livewire\Posts\Create as PostsCreate;
 
 Route::get('/', function () {
+    if (Auth::check()) {
+        return redirect()->route('posts.index');
+    }
     return view('welcome');
 })->name('home');
 
@@ -17,10 +21,6 @@ Route::get('posts', PostsIndex::class)->name('posts.index');
 Route::get('posts/{id}', PostsShow::class)
     ->where('id', '[a-f0-9]{24}')
     ->name('posts.show');
-
-Route::view('dashboard', 'dashboard')
-    ->middleware(['auth', 'verified'])
-    ->name('dashboard');
 
 Route::middleware(['auth'])->group(function () {
     Route::redirect('settings', 'settings/profile');
